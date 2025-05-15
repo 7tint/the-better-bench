@@ -20,7 +20,7 @@ const BenchCard: React.FC<BenchCardProps> = ({ bench }) => {
 
   return (
     <Link to={`/bench/${bench.id}`}>
-      <div className="relative mb-8 transform transition hover:-rotate-1 hover:scale-102">
+      <div className="relative mb-8 transform transition hover:-rotate-1 hover:scale-105">
         <div className="bg-white p-3 pb-16 shadow-polaroid">
           <div className="relative overflow-hidden aspect-[4/3]">
             {bench.images && bench.images.length > 0 ? (
@@ -50,7 +50,7 @@ const BenchCard: React.FC<BenchCardProps> = ({ bench }) => {
               {bench.name}
             </p>
             <div className="flex justify-center items-center mt-1">
-              <span className="text-xs font-mono text-filmRed mr-1">
+              <span className="text-xs font-mono text-film-red mr-1">
                 RATING:
               </span>
               <span className="text-sm font-mono text-old-ink">

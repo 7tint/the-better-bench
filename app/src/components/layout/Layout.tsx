@@ -8,7 +8,7 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = () => {
   return (
     <div className="min-h-screen bg-paper">
-      <header className="px-4 pb-6 pt-8 bg-yellowedPaper border-b-3 border-old-ink">
+      <header className="px-4 pb-6 pt-8 bg-yellowed-paper border-b-3 border-old-ink">
         <div className="container mx-auto">
           <h1 className="newspaper-headline">The Better Bench</h1>
           <div className="flex justify-between items-center mt-4">

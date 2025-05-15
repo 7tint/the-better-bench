@@ -23,7 +23,7 @@ const AdminLogin: React.FC = () => {
       <h2 className="newspaper-headline text-xl mb-6">Editor's Login</h2>
 
       {error && (
-        <p className="mb-4 p-2 text-filmRed bg-cream border border-filmRed text-center font-mono text-sm">
+        <p className="mb-4 p-2 text-film-red bg-cream border border-film-red text-center font-mono text-sm">
           {error}
         </p>
       )}

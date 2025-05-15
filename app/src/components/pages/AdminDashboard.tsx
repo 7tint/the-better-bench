@@ -159,7 +159,7 @@ const AdminDashboard: React.FC = () => {
                       </button>
                       <button
                         onClick={() => handleDelete(bench.id)}
-                        className="underline text-filmRed"
+                        className="underline text-film-red"
                       >
                         Delete
                       </button>

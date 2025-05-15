@@ -276,7 +276,7 @@ const BenchForm: React.FC<BenchFormProps> = ({
                 <button
                   type="button"
                   onClick={handleTakePhoto}
-                  className="flex-1 py-2 mr-2 bg-filmRed text-white font-mono text-sm uppercase"
+                  className="flex-1 py-2 mr-2 bg-film-red text-white font-mono text-sm uppercase"
                 >
                   Take Photo
                 </button>
@@ -284,7 +284,7 @@ const BenchForm: React.FC<BenchFormProps> = ({
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
-                  className="flex-1 py-2 bg-filmBlue text-white font-mono text-sm uppercase"
+                  className="flex-1 py-2 bg-film-blue text-white font-mono text-sm uppercase"
                 >
                   Upload
                 </button>

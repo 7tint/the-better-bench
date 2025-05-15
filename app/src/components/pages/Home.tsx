@@ -163,7 +163,7 @@ const Home: React.FC = () => {
         </div>
       </div>
 
-      <div className="mt-12 p-6 border-2 border-dashed border-old-ink bg-yellowedPaper">
+      <div className="mt-12 p-6 border-2 border-dashed border-old-ink bg-yellowed-paper">
         <p className="font-mono text-xs text-center text-old-ink uppercase tracking-widest mb-2">
           Editor's Note
         </p>
