@@ -153,7 +153,7 @@ const Home: React.FC = () => {
               </h3>
 
               <div className="magazine-column">
-                <p className="font-serif text-sm text-old-ink mb-3">
+                <p className="font-serif text-sm text-old-ink mb-3 italic">
                   Our editors have selected this exceptional bench for today's
                   feature. Located at coordinates{" "}
                   {featuredBenches[0].location.latitude.toFixed(4)},{"\u00A0"}
@@ -161,9 +161,8 @@ const Home: React.FC = () => {
                   offers an experience that stands out from the ordinary.
                 </p>
 
-                <p className="font-serif text-sm text-old-ink">
-                  {featuredBenches[0].notes ||
-                    "The bench beckons visitors with its unique charm and character, promising a moment of respite in a busy world. Its design speaks to both form and function, creating a perfect harmony between aesthetics and comfort."}
+                <p className="font-serif text-sm text-old-ink bold">
+                  {featuredBenches[0].notes}
                 </p>
               </div>
 
