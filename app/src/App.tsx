@@ -12,8 +12,10 @@ import AdminDashboard from "./components/pages/AdminDashboard";
 import "./App.css";
 
 const PlaceholderPage: React.FC<{ title: string }> = ({ title }) => (
-  <div className="p-6 bg-cream border border-old-ink text-center">
-    <h2 className="font-serif text-xl text-old-ink mb-3">{title}</h2>
+  <div className="p-6 bg-newsprint border border-old-ink text-center">
+    <h2 className="font-serif text-xl text-old-ink mb-3 font-medium">
+      {title}
+    </h2>
     <p className="font-mono text-sm text-old-ink">
       This page is still being developed. Check back soon!
     </p>
@@ -66,8 +68,10 @@ function App() {
             index
             element={
               <div className="text-center py-10">
-                <h2 className="newspaper-headline">Page Not Found</h2>
-                <p className="font-serif mt-4">
+                <h2 className="newspaper-headline text-old-ink text-2xl">
+                  Page Not Found
+                </h2>
+                <p className="font-serif mt-4 text-old-ink">
                   This edition is not available.
                 </p>
               </div>

@@ -3,25 +3,25 @@
 
 /* Define Tailwind 4 theme using the new @theme directive */
 @theme {
-  /* Vintage/faded color palette */
-  --color-cream: #f2f1e8;
-  --color-paper: #e7e2d3;
-  --color-yellowed-paper: #e5dfc5;
-  --color-newsprint: #dadad2;
-  --color-old-ink: #2d2d2a;
-  --color-faded-black: #333333;
+  /* Vintage/faded color palette - lightened for better contrast */
+  --color-cream: #f9f8f2;
+  --color-paper: #f2efe6;
+  --color-yellowed-paper: #f0ece0;
+  --color-newsprint: #e8e8e2;
+  --color-old-ink: #1f1f1c;
+  --color-faded-black: #2a2a2a;
 
-  /* Dispo camera inspired */
-  --color-flash: #fff9e6;
-  --color-overexposed: #fffcf0;
-  --color-film-red: #d14836;
-  --color-film-blue: #436b94;
-  --color-film-green: #2d5547;
+  /* Dispo camera inspired - improved for better contrast */
+  --color-flash: #fffbf0;
+  --color-overexposed: #fffef8;
+  --color-film-red: #c13226;
+  --color-film-blue: #355980;
+  --color-film-green: #274a3d;
 
-  /* Accent colors */
-  --color-accent1: #935e3b; /* brown */
-  --color-accent2: #5e7489; /* dusty blue */
-  --color-accent3: #9d8354; /* gold */
+  /* Accent colors - adjusted for better visibility */
+  --color-accent1: #7e4e2f; /* darker brown for better contrast */
+  --color-accent2: #4a6175; /* deeper dusty blue */
+  --color-accent3: #8c7347; /* richer gold */
 
   /* Font families */
   --font-serif: "Georgia", "Cambria", "Times New Roman", "serif";
@@ -58,8 +58,8 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: #1f1f1c;
+  background-color: #f2efe6;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -69,11 +69,11 @@
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: #4a6175;
   text-decoration: inherit;
 }
 a:hover {
-  color: #535bf2;
+  color: #355980;
 }
 
 body {
@@ -91,17 +91,19 @@ h1 {
 
 button {
   border-radius: 0px;
-  border: 1px solid transparent;
+  border: 1px solid #1f1f1c;
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #e8e8e2;
+  color: #1f1f1c;
   cursor: pointer;
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: #7e4e2f;
+  background-color: #f0ece0;
 }
 button:focus,
 button:focus-visible {
@@ -110,14 +112,14 @@ button:focus-visible {
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    color: #1f1f1c;
+    background-color: #f2efe6;
   }
   a:hover {
-    color: #747bff;
+    color: #355980;
   }
   button {
-    background-color: #f9f9f9;
+    background-color: #e8e8e2;
   }
 }
 

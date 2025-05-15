@@ -34,7 +34,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(231, 225, 195, 0.1);
+  background-color: rgba(240, 236, 224, 0.15);
   pointer-events: none;
   z-index: 10;
 }
@@ -84,7 +84,7 @@
   .newspaper-text {
     column-count: 2;
     column-gap: 2rem;
-    column-rule: 1px solid rgba(45, 45, 42, 0.2);
+    column-rule: 1px solid rgba(31, 31, 28, 0.2);
     text-align: justify;
   }
 
@@ -134,7 +134,7 @@
   right: 0;
   border-style: solid;
   border-width: 0 24px 24px 0;
-  border-color: transparent rgba(231, 225, 195, 1) transparent transparent;
+  border-color: transparent rgba(240, 236, 224, 1) transparent transparent;
   box-shadow: -2px 2px 3px rgba(0, 0, 0, 0.1);
 }
 
@@ -164,7 +164,7 @@
   content: "+";
   font-family: monospace;
   position: absolute;
-  color: rgba(45, 45, 42, 0.2);
+  color: rgba(31, 31, 28, 0.2);
   font-size: 12px;
   line-height: 1;
 }
@@ -191,42 +191,43 @@ input[type="range"]::-webkit-slider-thumb {
   appearance: none;
   height: 16px;
   width: 16px;
-  background-color: #935e3b;
+  background-color: #7e4e2f;
   border-radius: 0;
-  border: 2px solid #2d2d2a;
+  border: 2px solid #1f1f1c;
   margin-top: -7px;
 }
 
 input[type="range"]::-moz-range-thumb {
   height: 16px;
   width: 16px;
-  background-color: #935e3b;
+  background-color: #7e4e2f;
   border-radius: 0;
-  border: 2px solid #2d2d2a;
+  border: 2px solid #1f1f1c;
 }
 
 input[type="range"]::-webkit-slider-runnable-track {
   height: 4px;
-  background: #dadad2;
-  border: 1px solid #2d2d2a;
+  background: #e8e8e2;
+  border: 1px solid #1f1f1c;
 }
 
 input[type="range"]::-moz-range-track {
   height: 4px;
-  background: #dadad2;
-  border: 1px solid #2d2d2a;
+  background: #e8e8e2;
+  border: 1px solid #1f1f1c;
 }
 
 .date-stamp-red {
   font-family: "Courier New", monospace;
   font-size: 0.7rem;
-  color: #d14836;
+  color: #c13226;
   position: absolute;
   bottom: 8px;
   right: 8px;
   padding: 2px;
   letter-spacing: 1px;
-  text-shadow: 0 0 1px rgba(209, 72, 54, 0.5);
+  text-shadow: 0 0 1px rgba(193, 50, 38, 0.5);
+  font-weight: bold;
 }
 
 .pull-quote {
@@ -234,10 +235,10 @@ input[type="range"]::-moz-range-track {
   font-size: 1.25rem;
   font-style: italic;
   line-height: 1.4;
-  border-left: 3px solid #9d8354;
+  border-left: 3px solid #8c7347;
   padding-left: 1rem;
   margin: 1.5rem 0;
-  color: #2d2d2a;
+  color: #1f1f1c;
 }
 
 @media print {

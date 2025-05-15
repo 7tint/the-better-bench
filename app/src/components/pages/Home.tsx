@@ -5,6 +5,38 @@ import { db } from "../../services/firebase";
 import type { BenchEntry } from "../../types";
 import BenchCard from "../common/BenchCard";
 
+// Helper function to convert Firestore timestamps to JavaScript Dates
+const convertTimestampsToDates = (
+  data: Record<string, unknown>
+): Record<string, unknown> => {
+  const newData = { ...data };
+
+  // Convert both dateVisited, createdAt, and updatedAt if they exist and are Firestore timestamps
+  if (
+    newData.dateVisited &&
+    typeof (newData.dateVisited as { toDate?: () => Date }).toDate ===
+      "function"
+  ) {
+    newData.dateVisited = (
+      newData.dateVisited as { toDate: () => Date }
+    ).toDate();
+  }
+  if (
+    newData.createdAt &&
+    typeof (newData.createdAt as { toDate?: () => Date }).toDate === "function"
+  ) {
+    newData.createdAt = (newData.createdAt as { toDate: () => Date }).toDate();
+  }
+  if (
+    newData.updatedAt &&
+    typeof (newData.updatedAt as { toDate?: () => Date }).toDate === "function"
+  ) {
+    newData.updatedAt = (newData.updatedAt as { toDate: () => Date }).toDate();
+  }
+
+  return newData;
+};
+
 const Home: React.FC = () => {
   const [featuredBenches, setFeaturedBenches] = useState<BenchEntry[]>([]);
   const [recentBenches, setRecentBenches] = useState<BenchEntry[]>([]);
@@ -32,15 +64,21 @@ const Home: React.FC = () => {
           getDocs(recentQuery),
         ]);
 
-        const featuredData = featuredSnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        })) as BenchEntry[];
+        const featuredData = featuredSnapshot.docs.map((doc) => {
+          const data = doc.data();
+          return {
+            id: doc.id,
+            ...convertTimestampsToDates(data),
+          };
+        }) as BenchEntry[];
 
-        const recentData = recentSnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        })) as BenchEntry[];
+        const recentData = recentSnapshot.docs.map((doc) => {
+          const data = doc.data();
+          return {
+            id: doc.id,
+            ...convertTimestampsToDates(data),
+          };
+        }) as BenchEntry[];
 
         setFeaturedBenches(featuredData);
         setRecentBenches(recentData);
@@ -76,40 +114,36 @@ const Home: React.FC = () => {
         <div className="mb-12">
           <h2 className="newspaper-headline text-2xl mb-4">Today's Feature</h2>
 
-          <div className="flex flex-col md:flex-row gap-6">
-            <div className="md:w-2/3">
-              <div className="bg-white p-4 pb-20 shadow-polaroid">
-                <div className="relative">
-                  <img
-                    src={featuredBenches[0].images[0]}
-                    alt={featuredBenches[0].name}
-                    className="w-full object-cover"
-                    style={{
-                      aspectRatio: "4/3",
-                      filter: "saturate(1.2) contrast(1.1)",
-                    }}
-                  />
-
-                  <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-flash to-transparent opacity-60"></div>
-                  <div className="date-stamp">
-                    {featuredBenches[0].dateVisited
-                      .toLocaleDateString("en-US", {
-                        year: "2-digit",
-                        month: "2-digit",
-                        day: "2-digit",
-                      })
-                      .replace(/\//g, "-")}
-                  </div>
+          <div className="flex flex-col md:flex-row gap-6 justify-center">
+            <div className="bg-cream p-4 shadow-polaroid border border-faded-black relative max-w-[550px]">
+              <div className="relative">
+                <img
+                  src={featuredBenches[0].images[0]}
+                  alt={featuredBenches[0].name}
+                  className="w-full object-cover max-w-[500px] max-h-[400px] mx-auto"
+                  style={{
+                    aspectRatio: "4/3",
+                    filter: "saturate(1.1) contrast(1.05)",
+                  }}
+                />
+                <div className="date-stamp-red">
+                  {featuredBenches[0].dateVisited
+                    .toLocaleDateString("en-US", {
+                      year: "2-digit",
+                      month: "2-digit",
+                      day: "2-digit",
+                    })
+                    .replace(/\//g, "-")}
                 </div>
+              </div>
 
-                <div className="absolute bottom-6 left-6 right-6 text-center">
-                  <h3 className="font-serif text-lg text-old-ink mb-1">
-                    {featuredBenches[0].name}
-                  </h3>
-                  <p className="font-mono text-sm text-old-ink">
-                    Overall Rating: {featuredBenches[0].ratings.overall}/10
-                  </p>
-                </div>
+              <div className="mt-4 mb-2 text-center">
+                <h3 className="font-serif text-lg text-old-ink mb-1">
+                  {featuredBenches[0].name}
+                </h3>
+                <p className="font-mono text-sm text-old-ink">
+                  Overall Rating: {featuredBenches[0].ratings.overall}/10
+                </p>
               </div>
             </div>
 
@@ -122,7 +156,7 @@ const Home: React.FC = () => {
                 <p className="font-serif text-sm text-old-ink mb-3">
                   Our editors have selected this exceptional bench for today's
                   feature. Located at coordinates{" "}
-                  {featuredBenches[0].location.latitude.toFixed(4)},
+                  {featuredBenches[0].location.latitude.toFixed(4)},{"\u00A0"}
                   {featuredBenches[0].location.longitude.toFixed(4)}, this bench
                   offers an experience that stands out from the ordinary.
                 </p>
@@ -156,9 +190,9 @@ const Home: React.FC = () => {
         <div className="text-center mt-8">
           <Link
             to="/gallery"
-            className="inline-block px-6 py-2 bg-old-ink text-cream font-serif uppercase tracking-wider text-sm shadow-newspaper transform transition hover:translate-x-px hover:translate-y-px"
+            className="inline-block px-6 py-2 bg-accent3 font-serif uppercase tracking-wider text-sm shadow-newspaper transform transition hover:translate-x-px hover:translate-y-px"
           >
-            View All Benches
+            <div className="text-cream">View All Benches</div>
           </Link>
         </div>
       </div>
@@ -180,9 +214,9 @@ const Home: React.FC = () => {
           <Link
             target="_blank"
             to="https://www.youtube.com/watch?v=cRSbCLU7HuU"
-            className="inline-block px-4 py-2 bg-accent1 text-white font-serif uppercase tracking-wider text-sm hover:translate-x-px hover:translate-y-px"
+            className="inline-block px-4 py-2 bg-accent1 text-overexposed font-serif uppercase tracking-wider text-sm hover:translate-x-px hover:translate-y-px"
           >
-            Pedro's Bench
+            <div className="text-cream">Pedro's Bench</div>
           </Link>
         </div>
       </div>

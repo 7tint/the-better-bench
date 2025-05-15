@@ -1,4 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
+import { ref, uploadString, getDownloadURL } from "firebase/storage";
+import { storage } from "../../services/firebase";
+import { v4 as uuidv4 } from "uuid";
 import type { BenchEntry } from "../../types";
 
 interface BenchFormProps {
@@ -52,7 +55,6 @@ const BenchForm: React.FC<BenchFormProps> = ({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const modalRef = useRef<HTMLDivElement>(null);
 
-  // Close modal when clicking outside or pressing Escape
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -60,12 +62,12 @@ const BenchForm: React.FC<BenchFormProps> = ({
 
     if (isOpen) {
       document.addEventListener("keydown", handleEscape);
-      document.body.style.overflow = "hidden"; // Prevent scrolling behind modal
+      document.body.style.overflow = "hidden";
     }
 
     return () => {
       document.removeEventListener("keydown", handleEscape);
-      document.body.style.overflow = "auto"; // Restore scrolling
+      document.body.style.overflow = "auto";
     };
   }, [isOpen, onClose]);
 
@@ -95,7 +97,6 @@ const BenchForm: React.FC<BenchFormProps> = ({
   };
 
   const handleRatingChange = (category: string, value: string) => {
-    // If in number mode and value is a valid number, convert to number
     let processedValue: number | string = value;
     if (ratingTypes[category] === "number" && !isNaN(parseFloat(value))) {
       processedValue = parseFloat(value);
@@ -117,20 +118,17 @@ const BenchForm: React.FC<BenchFormProps> = ({
   };
 
   const toggleRatingType = (category: string) => {
-    // Toggle between number and text rating types
     const newType = ratingTypes[category] === "number" ? "text" : "number";
     setRatingTypes({
       ...ratingTypes,
       [category]: newType,
     });
 
-    // Convert the current value to match the new type
     const currentValue =
       formData.ratings?.[category as keyof typeof formData.ratings];
     let newValue: number | string;
 
     if (newType === "number") {
-      // Convert to number if possible, otherwise default to 5
       newValue =
         typeof currentValue === "string"
           ? !isNaN(parseFloat(currentValue))
@@ -138,11 +136,8 @@ const BenchForm: React.FC<BenchFormProps> = ({
             : 5
           : currentValue || 5;
     } else {
-      // Convert to string
       newValue = currentValue?.toString() || "5";
     }
-
-    // Update the rating
     handleRatingChange(category, newValue.toString());
   };
 
@@ -159,7 +154,6 @@ const BenchForm: React.FC<BenchFormProps> = ({
         if (e.target?.result) {
           newPreviewImages.push(e.target.result as string);
           setPreviewImages(newPreviewImages);
-          // Set active image to first newly uploaded image if there were no images before
           if (initialLength === 0 && newPreviewImages.length === 1) {
             setActiveImageIndex(0);
           }
@@ -180,10 +174,35 @@ const BenchForm: React.FC<BenchFormProps> = ({
     setLoading(true);
 
     try {
-      // Use preview images directly for now
+      const imageUrls = await Promise.all(
+        previewImages.map(async (imageData) => {
+          if (!imageData.startsWith("data:")) {
+            return imageData;
+          }
+
+          const imageId = uuidv4();
+          const imageExtension =
+            imageData.split(";")[0].split("/")[1] || "jpeg";
+          const filename = `bench-images/${
+            formData.id || "new"
+          }-${imageId}.${imageExtension}`;
+
+          const storageRef = ref(storage, filename);
+
+          const snapshot = await uploadString(
+            storageRef,
+            imageData,
+            "data_url"
+          );
+
+          const downloadUrl = await getDownloadURL(snapshot.ref);
+          return downloadUrl;
+        })
+      );
+
       const updatedFormData = {
         ...formData,
-        images: previewImages,
+        images: imageUrls,
       };
 
       await onSubmit(updatedFormData);
