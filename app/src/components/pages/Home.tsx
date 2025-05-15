@@ -161,7 +161,7 @@ const Home: React.FC = () => {
                   offers an experience that stands out from the ordinary.
                 </p>
 
-                <p className="font-serif text-sm text-old-ink bold">
+                <p className="font-serif text-sm text-old-ink font-bold">
                   {featuredBenches[0].notes}
                 </p>
               </div>
