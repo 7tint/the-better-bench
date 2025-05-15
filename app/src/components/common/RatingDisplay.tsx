@@ -38,7 +38,7 @@ const RatingDisplay: React.FC<RatingDisplayProps> = ({
                 style={{ width: `${(numericValue / maxValue) * 100}%` }}
               ></div>
               <div className="absolute top-0 left-0 right-0 bottom-0 flex justify-between pointer-events-none">
-                {[...Array(5)].map((_, i) => (
+                {[...Array(10)].map((_, i) => (
                   <div
                     key={i}
                     className="h-full w-px bg-oldInk opacity-20"

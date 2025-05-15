@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -7,11 +7,10 @@ import {
 } from "react-router-dom";
 import Layout from "./components/layout/Layout";
 import Home from "./components/pages/Home";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "./services/firebase";
+import AdminLogin from "./components/pages/AdminLogin";
+import AdminDashboard from "./components/pages/AdminDashboard";
 import "./App.css";
 
-// Import placeholder for undeveloped pages
 const PlaceholderPage: React.FC<{ title: string }> = ({ title }) => (
   <div className="p-6 bg-cream border border-oldInk text-center">
     <h2 className="font-serif text-xl text-oldInk mb-3">{title}</h2>
@@ -22,27 +21,14 @@ const PlaceholderPage: React.FC<{ title: string }> = ({ title }) => (
 );
 
 const AdminRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
+  const isAuthenticated =
+    sessionStorage.getItem("isAdminAuthenticated") === "true";
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setIsAdmin(!!user);
-    });
-
-    return () => unsubscribe();
-  }, []);
-
-  if (isAdmin === null) {
-    return (
-      <div className="flex justify-center py-20">
-        <div className="animate-pulse">
-          <p className="font-serif text-oldInk">Checking credentials...</p>
-        </div>
-      </div>
-    );
-  }
-
-  return isAdmin ? <>{children}</> : <Navigate to="/admin/login" replace />;
+  return isAuthenticated ? (
+    <>{children}</>
+  ) : (
+    <Navigate to="/admin/login" replace />
+  );
 };
 
 function App() {
@@ -68,17 +54,14 @@ function App() {
             index
             element={
               <AdminRoute>
-                <PlaceholderPage title="Admin Dashboard" />
+                <AdminDashboard />
               </AdminRoute>
             }
           />
-          <Route
-            path="login"
-            element={<PlaceholderPage title="Admin Login" />}
-          />
+          <Route path="login" element={<AdminLogin />} />
         </Route>
 
-        <Route path="*" element={<Layout isAdmin={false} />}>
+        <Route path="*" element={<Layout />}>
           <Route
             index
             element={

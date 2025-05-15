@@ -165,20 +165,24 @@ const Home: React.FC = () => {
 
       <div className="mt-12 p-6 border-2 border-dashed border-oldInk bg-yellowedPaper">
         <p className="font-mono text-xs text-center text-oldInk uppercase tracking-widest mb-2">
-          Advertisement
+          Editor's Note
         </p>
         <div className="text-center">
           <h3 className="font-serif font-bold text-2xl text-accent1 mb-2">
-            Got a Bench to Share?
+            Why Benches?
           </h3>
-          <p className="font-serif text-oldInk mb-4">
-            Contribute to our growing collection of remarkable benches!
+          <p className="font-serif text-oldInk mb-4 whitespace-pre-wrap">
+            Have you ever wondered why benches are so important? {"\n"}
+            They are not just spots to rest at; {"\n"} they are a place for
+            introspection, a nudge to breathe the air, and a reminder to
+            appreciate the world around us. {"\n"}
           </p>
           <Link
-            to="/admin"
-            className="inline-block px-4 py-2 bg-accent1 text-white font-serif uppercase tracking-wider text-sm"
+            target="_blank"
+            to="https://www.youtube.com/watch?v=cRSbCLU7HuU"
+            className="inline-block px-4 py-2 bg-accent1 text-white font-serif uppercase tracking-wider text-sm hover:translate-x-px hover:translate-y-px"
           >
-            Submit Your Bench
+            Pedro's Bench
           </Link>
         </div>
       </div>

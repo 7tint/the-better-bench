@@ -5,10 +5,10 @@ interface LayoutProps {
   isAdmin?: boolean;
 }
 
-const Layout: React.FC<LayoutProps> = ({ isAdmin = false }) => {
+const Layout: React.FC<LayoutProps> = () => {
   return (
     <div className="min-h-screen bg-paper">
-      <header className="px-4 py-6 bg-yellowedPaper border-b-3 border-oldInk">
+      <header className="px-4 pb-6 pt-8 bg-yellowedPaper border-b-3 border-oldInk">
         <div className="container mx-auto">
           <h1 className="newspaper-headline">The Better Bench</h1>
           <div className="flex justify-between items-center mt-4">
@@ -16,33 +16,31 @@ const Layout: React.FC<LayoutProps> = ({ isAdmin = false }) => {
             <p className="font-mono text-xs text-oldInk">LAMBERT & FRIENDS</p>
           </div>
 
-          <nav className="mt-6 pt-2 border-t border-oldInk flex justify-center space-x-6 text-sm font-serif">
+          <nav className="mt-6 pt-6 border-t border-oldInk flex justify-center space-x-8 text-sm font-serif">
             <Link
               to="/"
-              className="uppercase tracking-wider text-accent1 hover:underline"
+              className="uppercase tracking-wider text-accent1 hover:translate-x-px hover:translate-y-px"
             >
               Front Page
             </Link>
             <Link
               to="/gallery"
-              className="uppercase tracking-wider text-accent1 hover:underline"
+              className="uppercase tracking-wider text-accent1 hover:translate-x-px hover:translate-y-px"
             >
               Gallery
             </Link>
             <Link
               to="/map"
-              className="uppercase tracking-wider text-accent1 hover:underline"
+              className="uppercase tracking-wider text-accent1 hover:translate-x-px hover:translate-y-px"
             >
               Map
             </Link>
-            {isAdmin && (
-              <Link
-                to="/admin"
-                className="uppercase tracking-wider text-accent1 hover:underline"
-              >
-                Editor's Desk
-              </Link>
-            )}
+            <Link
+              to="/admin"
+              className="uppercase tracking-wider text-accent1 hover:translate-x-px hover:translate-y-px"
+            >
+              Editor's Desk
+            </Link>
           </nav>
         </div>
       </header>
