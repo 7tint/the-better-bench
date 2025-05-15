@@ -193,7 +193,7 @@ const BenchForm: React.FC<BenchFormProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-opacity-75 bg-oldInk overflow-y-auto"
+      className="fixed inset-0 z-50 bg-opacity-75 bg-old-ink overflow-y-auto"
       onClick={(e) => {
         if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
           onClose();
@@ -206,24 +206,24 @@ const BenchForm: React.FC<BenchFormProps> = ({
           className="w-full max-w-lg transform overflow-hidden bg-paper transition-all"
           style={{ maxHeight: "100vh", overflowY: "auto" }}
         >
-          <div className="px-4 py-3 border-b border-oldInk sticky top-0 bg-paper z-10">
+          <div className="px-4 py-3 border-b border-old-ink sticky top-0 bg-paper z-10">
             <div className="flex justify-between items-center">
-              <button type="button" onClick={onClose} className="text-oldInk">
+              <button type="button" onClick={onClose} className="text-old-ink">
                 &larr;
               </button>
-              <h2 className="font-serif text-xl text-oldInk text-center flex-grow">
+              <h2 className="font-serif text-xl text-old-ink text-center flex-grow">
                 {bench?.id ? "Edit" : "New"} Bench Entry
               </h2>
               <div className="w-4"></div> {/* Spacer for centering */}
             </div>
-            <p className="font-mono text-xs text-center text-oldInk mt-1">
+            <p className="font-mono text-xs text-center text-old-ink mt-1">
               {new Date().toLocaleDateString()}
             </p>
           </div>
 
           <form onSubmit={handleSubmit} className="p-4">
             <div className="mb-4">
-              <label className="block font-serif text-sm uppercase tracking-wider text-oldInk mb-1">
+              <label className="block font-serif text-sm uppercase tracking-wider text-old-ink mb-1">
                 Bench Name
               </label>
               <input
@@ -231,13 +231,13 @@ const BenchForm: React.FC<BenchFormProps> = ({
                 name="name"
                 value={formData.name || ""}
                 onChange={handleChange}
-                className="w-full p-2 font-mono bg-cream border border-oldInk focus:outline-none focus:ring-1 focus:ring-accent1"
+                className="w-full p-2 font-mono bg-cream border border-old-ink focus:outline-none focus:ring-1 focus:ring-accent1"
                 required
               />
             </div>
 
             <div className="mb-6">
-              <label className="block font-serif text-sm uppercase tracking-wider text-oldInk mb-1">
+              <label className="block font-serif text-sm uppercase tracking-wider text-old-ink mb-1">
                 Photographs
               </label>
 
@@ -311,10 +311,10 @@ const BenchForm: React.FC<BenchFormProps> = ({
 
             <div className="mb-4">
               <div className="flex justify-between items-center mb-2">
-                <p className="font-serif text-sm uppercase tracking-wider text-oldInk">
+                <p className="font-serif text-sm uppercase tracking-wider text-old-ink">
                   Ratings
                 </p>
-                <p className="font-mono text-xs text-oldInk">
+                <p className="font-mono text-xs text-old-ink">
                   tap rating type to switch
                 </p>
               </div>
@@ -326,14 +326,14 @@ const BenchForm: React.FC<BenchFormProps> = ({
                     className="mb-4 pb-3 border-b border-newsprint"
                   >
                     <div className="flex justify-between items-center mb-2">
-                      <label className="font-mono text-xs text-oldInk uppercase">
+                      <label className="font-mono text-xs text-old-ink uppercase">
                         {category}
                       </label>
 
                       <button
                         type="button"
                         onClick={() => toggleRatingType(category)}
-                        className="py-1 px-2 text-xs font-mono bg-newsprint text-oldInk rounded"
+                        className="py-1 px-2 text-xs font-mono bg-newsprint text-old-ink rounded"
                       >
                         {ratingTypes[category] === "number" ? "Number" : "Text"}{" "}
                         Rating
@@ -352,9 +352,9 @@ const BenchForm: React.FC<BenchFormProps> = ({
                             onChange={(e) =>
                               handleRatingChange(category, e.target.value)
                             }
-                            className="w-16 p-1 font-mono text-sm bg-cream border border-oldInk focus:outline-none"
+                            className="w-16 p-1 font-mono text-sm bg-cream border border-old-ink focus:outline-none"
                           />
-                          <span className="font-mono text-xs text-oldInk">
+                          <span className="font-mono text-xs text-old-ink">
                             /10
                           </span>
                         </div>
@@ -380,7 +380,7 @@ const BenchForm: React.FC<BenchFormProps> = ({
                             handleRatingChange(category, e.target.value)
                           }
                           placeholder="e.g., Fantastic or 8.5"
-                          className="flex-grow p-2 font-mono text-sm bg-cream border border-oldInk focus:outline-none"
+                          className="flex-grow p-2 font-mono text-sm bg-cream border border-old-ink focus:outline-none"
                         />
                         <span className="ml-2 font-mono text-sm flex items-center">
                           /10
@@ -393,7 +393,7 @@ const BenchForm: React.FC<BenchFormProps> = ({
             </div>
 
             <div className="mb-6">
-              <label className="block font-serif text-sm uppercase tracking-wider text-oldInk mb-1">
+              <label className="block font-serif text-sm uppercase tracking-wider text-old-ink mb-1">
                 Field Notes
               </label>
               <textarea
@@ -401,14 +401,14 @@ const BenchForm: React.FC<BenchFormProps> = ({
                 value={formData.notes || ""}
                 onChange={handleChange}
                 rows={4}
-                className="w-full p-2 font-mono text-sm bg-cream border border-oldInk focus:outline-none focus:ring-1 focus:ring-accent1"
+                className="w-full p-2 font-mono text-sm bg-cream border border-old-ink focus:outline-none focus:ring-1 focus:ring-accent1"
               ></textarea>
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 bg-oldInk text-cream font-serif uppercase tracking-widest text-sm shadow-newspaper transform transition hover:translate-x-px hover:translate-y-px"
+              className="w-full py-3 bg-old-ink text-cream font-serif uppercase tracking-widest text-sm shadow-newspaper transform transition hover:translate-x-px hover:translate-y-px"
             >
               {loading ? "Developing..." : bench?.id ? "Update" : "Publish"}
             </button>

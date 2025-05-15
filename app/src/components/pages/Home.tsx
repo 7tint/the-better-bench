@@ -58,7 +58,7 @@ const Home: React.FC = () => {
     return (
       <div className="flex justify-center py-20">
         <div className="animate-pulse">
-          <p className="font-serif text-oldInk">Developing...</p>
+          <p className="font-serif text-old-ink">Developing...</p>
         </div>
       </div>
     );
@@ -67,7 +67,7 @@ const Home: React.FC = () => {
   return (
     <div>
       <div className="text-center mb-8">
-        <h2 className="font-serif italic text-lg text-oldInk">
+        <h2 className="font-serif italic text-lg text-old-ink">
           "Documenting the world's finest resting places, one bench at a time"
         </h2>
       </div>
@@ -103,23 +103,23 @@ const Home: React.FC = () => {
                 </div>
 
                 <div className="absolute bottom-6 left-6 right-6 text-center">
-                  <h3 className="font-serif text-lg text-oldInk mb-1">
+                  <h3 className="font-serif text-lg text-old-ink mb-1">
                     {featuredBenches[0].name}
                   </h3>
-                  <p className="font-mono text-sm text-oldInk">
+                  <p className="font-mono text-sm text-old-ink">
                     Overall Rating: {featuredBenches[0].ratings.overall}/10
                   </p>
                 </div>
               </div>
             </div>
 
-            <div className="md:w-1/3 bg-cream p-6 border border-oldInk">
-              <h3 className="font-serif font-bold text-xl text-oldInk mb-3">
+            <div className="md:w-1/3 bg-cream p-6 border border-old-ink">
+              <h3 className="font-serif font-bold text-xl text-old-ink mb-3">
                 Bench of the Day
               </h3>
 
               <div className="magazine-column">
-                <p className="font-serif text-sm text-oldInk mb-3">
+                <p className="font-serif text-sm text-old-ink mb-3">
                   Our editors have selected this exceptional bench for today's
                   feature. Located at coordinates{" "}
                   {featuredBenches[0].location.latitude.toFixed(4)},
@@ -127,7 +127,7 @@ const Home: React.FC = () => {
                   offers an experience that stands out from the ordinary.
                 </p>
 
-                <p className="font-serif text-sm text-oldInk">
+                <p className="font-serif text-sm text-old-ink">
                   {featuredBenches[0].notes ||
                     "The bench beckons visitors with its unique charm and character, promising a moment of respite in a busy world. Its design speaks to both form and function, creating a perfect harmony between aesthetics and comfort."}
                 </p>
@@ -156,22 +156,22 @@ const Home: React.FC = () => {
         <div className="text-center mt-8">
           <Link
             to="/gallery"
-            className="inline-block px-6 py-2 bg-oldInk text-cream font-serif uppercase tracking-wider text-sm shadow-newspaper transform transition hover:translate-x-px hover:translate-y-px"
+            className="inline-block px-6 py-2 bg-old-ink text-cream font-serif uppercase tracking-wider text-sm shadow-newspaper transform transition hover:translate-x-px hover:translate-y-px"
           >
             View All Benches
           </Link>
         </div>
       </div>
 
-      <div className="mt-12 p-6 border-2 border-dashed border-oldInk bg-yellowedPaper">
-        <p className="font-mono text-xs text-center text-oldInk uppercase tracking-widest mb-2">
+      <div className="mt-12 p-6 border-2 border-dashed border-old-ink bg-yellowedPaper">
+        <p className="font-mono text-xs text-center text-old-ink uppercase tracking-widest mb-2">
           Editor's Note
         </p>
         <div className="text-center">
           <h3 className="font-serif font-bold text-2xl text-accent1 mb-2">
             Why Benches?
           </h3>
-          <p className="font-serif text-oldInk mb-4 whitespace-pre-wrap">
+          <p className="font-serif text-old-ink mb-4 whitespace-pre-wrap">
             Have you ever wondered why benches are so important? {"\n"}
             They are not just spots to rest at; {"\n"} they are a place for
             introspection, a nudge to breathe the air, and a reminder to

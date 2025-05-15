@@ -34,7 +34,7 @@ const BenchCard: React.FC<BenchCardProps> = ({ bench }) => {
               />
             ) : (
               <div className="w-full h-full bg-newsprint flex items-center justify-center">
-                <span className="font-mono text-oldInk">No Image</span>
+                <span className="font-mono text-old-ink">No Image</span>
               </div>
             )}
 
@@ -46,14 +46,14 @@ const BenchCard: React.FC<BenchCardProps> = ({ bench }) => {
           </div>
 
           <div className="absolute bottom-2 left-3 right-3 text-center">
-            <p className="font-serif text-sm text-oldInk leading-tight">
+            <p className="font-serif text-sm text-old-ink leading-tight">
               {bench.name}
             </p>
             <div className="flex justify-center items-center mt-1">
               <span className="text-xs font-mono text-filmRed mr-1">
                 RATING:
               </span>
-              <span className="text-sm font-mono text-oldInk">
+              <span className="text-sm font-mono text-old-ink">
                 {bench.ratings.overall}
               </span>
             </div>

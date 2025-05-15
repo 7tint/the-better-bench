@@ -1,7 +1,56 @@
+/* Import Google Fonts */
 @import url("https://fonts.googleapis.com/css2?family=Georgia&family=Courier+Prime&display=swap");
 
-@import "@silk-hq/components/unlayered-styles" layer(silk);
+/* Define Tailwind 4 theme using the new @theme directive */
+@theme {
+  /* Vintage/faded color palette */
+  --color-cream: #f2f1e8;
+  --color-paper: #e7e2d3;
+  --color-yellowed-paper: #e5dfc5;
+  --color-newsprint: #dadad2;
+  --color-old-ink: #2d2d2a;
+  --color-faded-black: #333333;
+
+  /* Dispo camera inspired */
+  --color-flash: #fff9e6;
+  --color-overexposed: #fffcf0;
+  --color-film-red: #d14836;
+  --color-film-blue: #436b94;
+  --color-film-green: #2d5547;
+
+  /* Accent colors */
+  --color-accent1: #935e3b; /* brown */
+  --color-accent2: #5e7489; /* dusty blue */
+  --color-accent3: #9d8354; /* gold */
+
+  /* Font families */
+  --font-serif: "Georgia", "Cambria", "Times New Roman", "serif";
+  --font-mono: "Courier New", "monospace";
+  --font-headline: "Georgia", "Cambria", "Times New Roman", "serif";
+  --font-body: "Courier New", "monospace";
+
+  /* Border widths */
+  --border-width-3: 3px;
+  --border-width-5: 5px;
+  --border-width-6: 6px;
+
+  /* Box shadows */
+  --shadow-polaroid: 0 1px 2px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.1),
+    0 4px 8px rgba(0, 0, 0, 0.05);
+  --shadow-newspaper: 2px 2px 0 rgba(0, 0, 0, 0.1);
+
+  /* Custom spacing */
+  --spacing-18: 4.5rem;
+  --spacing-68: 17rem;
+  --spacing-100: 25rem;
+  --spacing-128: 32rem;
+}
+
+/* Import Tailwind CSS - This must come AFTER your @theme directive */
 @import "tailwindcss";
+
+/* Then import Silk */
+@import "@silk-hq/components/unlayered-styles" layer(silk);
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;

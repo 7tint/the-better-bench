@@ -103,7 +103,7 @@ const AdminDashboard: React.FC = () => {
         <h2 className="newspaper-headline text-2xl">Editor's Desk</h2>
         <button
           onClick={handleLogout}
-          className="px-4 py-2 bg-newsprint text-oldInk font-mono text-sm border border-oldInk"
+          className="px-4 py-2 bg-newsprint text-old-ink font-mono text-sm border border-old-ink"
         >
           Sign Out
         </button>
@@ -112,7 +112,7 @@ const AdminDashboard: React.FC = () => {
       <div className="mb-6">
         <button
           onClick={() => handleOpenForm()}
-          className="px-6 py-3 bg-oldInk text-cream font-serif uppercase tracking-wider text-sm shadow-newspaper"
+          className="px-6 py-3 bg-old-ink text-cream font-serif uppercase tracking-wider text-sm shadow-newspaper"
         >
           Add New Bench
         </button>
@@ -120,13 +120,13 @@ const AdminDashboard: React.FC = () => {
 
       {loading ? (
         <div className="text-center py-8">
-          <p className="font-serif text-oldInk">Loading benches...</p>
+          <p className="font-serif text-old-ink">Loading benches...</p>
         </div>
       ) : (
-        <div className="bg-cream border border-oldInk">
+        <div className="bg-cream border border-old-ink">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-oldInk">
+              <tr className="border-b border-old-ink">
                 <th className="p-3 text-left font-serif">Name</th>
                 <th className="p-3 text-left font-serif">Date Visited</th>
                 <th className="p-3 text-left font-serif">Rating</th>
@@ -142,7 +142,7 @@ const AdminDashboard: React.FC = () => {
                 </tr>
               ) : (
                 benches.map((bench) => (
-                  <tr key={bench.id} className="border-b border-oldInk">
+                  <tr key={bench.id} className="border-b border-old-ink">
                     <td className="p-3 font-mono text-sm">{bench.name}</td>
                     <td className="p-3 font-mono text-sm">
                       {bench.dateVisited.toLocaleDateString()}
