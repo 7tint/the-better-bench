@@ -1,6 +1,8 @@
 @import "@silk-hq/components/unlayered-styles" layer(silk);
 @import "tailwindcss";
 
+@import url("https://fonts.googleapis.com/css2?family=Georgia&family=Courier+Prime&display=swap");
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -68,4 +70,17 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+/* Font class overrides */
+.font-serif {
+  font-family: "Georgia", serif !important;
+}
+
+.font-mono {
+  font-family: "Courier Prime", "Courier New", monospace !important;
+}
+
+.newspaper-headline {
+  font-family: "Georgia", serif !important;
 }
