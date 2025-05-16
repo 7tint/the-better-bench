@@ -315,6 +315,47 @@ const BenchForm: React.FC<BenchFormProps> = ({
             />
           </div>
 
+          <div className="mb-4">
+            <label className="block font-serif text-sm uppercase tracking-wider text-old-ink mb-1">
+              Location
+            </label>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block font-mono text-xs text-old-ink mb-1">
+                  Latitude
+                </label>
+                <input
+                  type="number"
+                  step="any"
+                  name="location.latitude"
+                  value={formData.location?.latitude || 0}
+                  onChange={handleChange}
+                  className="w-full p-2 font-mono text-sm bg-cream border border-old-ink focus:outline-none focus:ring-1 focus:ring-accent1"
+                />
+              </div>
+              <div>
+                <label className="block font-mono text-xs text-old-ink mb-1">
+                  Longitude
+                </label>
+                <input
+                  type="number"
+                  step="any"
+                  name="location.longitude"
+                  value={formData.location?.longitude || 0}
+                  onChange={handleChange}
+                  className="w-full p-2 font-mono text-sm bg-cream border border-old-ink focus:outline-none focus:ring-1 focus:ring-accent1"
+                />
+              </div>
+            </div>
+            <a
+              target="_blank"
+              href="https://www.gps-coordinates.net/my-location"
+              className="mt-1 font-mono text-xs text-old-ink italic"
+            >
+              https://www.gps-coordinates.net/my-location
+            </a>
+          </div>
+
           <div className="mb-6">
             <label className="block font-serif text-sm uppercase tracking-wider text-old-ink mb-1">
               Photographs
