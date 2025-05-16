@@ -7,6 +7,8 @@ import {
 } from "react-router-dom";
 import Layout from "./components/layout/Layout";
 import Home from "./components/pages/Home";
+import Gallery from "./components/pages/Gallery";
+import BenchDetails from "./components/pages/BenchDetails";
 import AdminLogin from "./components/pages/AdminLogin";
 import AdminDashboard from "./components/pages/AdminDashboard";
 import "./App.css";
@@ -39,18 +41,11 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route
-            path="gallery"
-            element={<PlaceholderPage title="Bench Gallery" />}
-          />
-          <Route
-            path="bench/:id"
-            element={<PlaceholderPage title="Bench Details" />}
-          />
+          <Route path="gallery" element={<Gallery />} />
+          <Route path="bench/:id" element={<BenchDetails />} />
           <Route path="map" element={<PlaceholderPage title="Bench Map" />} />
         </Route>
 
-        {/* Admin routes with Layout and isAdmin prop */}
         <Route path="/admin" element={<Layout isAdmin />}>
           <Route
             index
