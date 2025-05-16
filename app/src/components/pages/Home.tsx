@@ -188,15 +188,12 @@ const Home: React.FC = () => {
     );
   }
 
-  // Safe render function to handle potential undefined/null values
   const renderFeaturedBench = () => {
     if (!featuredBenches.length || !featuredBenches[0]) {
       return null;
     }
 
     const featured = featuredBenches[0];
-
-    // Safety check for location
     const latitude = ensureNumber(featured.location?.latitude).toFixed(4);
     const longitude = ensureNumber(featured.location?.longitude).toFixed(4);
 

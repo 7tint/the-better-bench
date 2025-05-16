@@ -33,7 +33,7 @@ export const saveOfflineEntry = async (
     tempId,
     createdAt: now,
     updatedAt: now,
-    _status: "pending" as const, // Fix type to match the union type in BenchEntry
+    _status: "pending" as const,
   };
 
   entries.push(newEntry);
@@ -85,12 +85,9 @@ const processBenchEntry = async (
 };
 
 export const syncOfflineEntries = async (): Promise<void> => {
-  if (!isOnline()) {
-  }
-
   const entries = getOfflineEntries();
   if (entries.length === 0) {
-    return; // No entries to sync
+    return;
   }
 
   const syncPromises = entries.map(processBenchEntry);

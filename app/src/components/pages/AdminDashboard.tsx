@@ -192,7 +192,6 @@ const AdminDashboard: React.FC = () => {
           await deleteDoc(doc(db, "benches", id));
         }
 
-        // Refresh the list
         fetchBenches();
       } catch (error) {
         console.error("Error deleting bench:", error);
