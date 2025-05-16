@@ -1,0 +1,23 @@
+{
+  "name": "The Better Bench",
+  "short_name": "Better Bench",
+  "description": "Rating all the benches i have the honour of encountering in my lifetime",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f9f8f2",
+  "theme_color": "#1f1f1c",
+  "icons": [
+    {
+      "src": "/icons/logo-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/logo-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
