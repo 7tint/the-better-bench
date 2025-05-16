@@ -17,43 +17,99 @@ const BenchForm: React.FC<BenchFormProps> = ({
   isOpen,
   onClose,
 }) => {
-  const [formData, setFormData] = useState<Partial<BenchEntry>>(
-    bench || {
-      name: "",
-      location: {
-        latitude: 0,
-        longitude: 0,
-      },
-      ratings: {
-        design: 5,
-        comfort: 5,
-        scenery: 5,
-        bonus: 5,
-        overall: 5,
-      },
-      images: [],
-      notes: "",
-      dateVisited: new Date(),
-    }
-  );
+  const [formData, setFormData] = useState<Partial<BenchEntry>>({
+    name: "",
+    location: {
+      latitude: 0,
+      longitude: 0,
+    },
+    ratings: {
+      design: 5,
+      comfort: 5,
+      scenery: 5,
+      bonus: 5,
+      overall: 5,
+    },
+    images: [],
+    notes: "",
+    dateVisited: new Date(),
+  });
 
   const [loading, setLoading] = useState(false);
-  const [previewImages, setPreviewImages] = useState<string[]>(
-    bench?.images || []
-  );
+  const [previewImages, setPreviewImages] = useState<string[]>([]);
   const [activeImageIndex, setActiveImageIndex] = useState<number>(0);
   const [ratingTypes, setRatingTypes] = useState<
     Record<string, "number" | "text">
   >({
-    design: typeof formData.ratings?.design === "string" ? "text" : "number",
-    comfort: typeof formData.ratings?.comfort === "string" ? "text" : "number",
-    scenery: typeof formData.ratings?.scenery === "string" ? "text" : "number",
-    bonus: typeof formData.ratings?.bonus === "string" ? "text" : "number",
-    overall: typeof formData.ratings?.overall === "string" ? "text" : "number",
+    design: "number",
+    comfort: "number",
+    scenery: "number",
+    bonus: "number",
+    overall: "number",
   });
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const modalRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!isOpen) {
+      setFormData({
+        name: "",
+        location: {
+          latitude: 0,
+          longitude: 0,
+        },
+        ratings: {
+          design: 5,
+          comfort: 5,
+          scenery: 5,
+          bonus: 5,
+          overall: 5,
+        },
+        images: [],
+        notes: "",
+        dateVisited: new Date(),
+      });
+      setPreviewImages([]);
+      setActiveImageIndex(0);
+      setRatingTypes({
+        design: "number",
+        comfort: "number",
+        scenery: "number",
+        bonus: "number",
+        overall: "number",
+      });
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (bench && isOpen) {
+      setFormData({
+        ...bench,
+        location: bench.location || {
+          latitude: 0,
+          longitude: 0,
+        },
+        ratings: bench.ratings || {
+          design: 5,
+          comfort: 5,
+          scenery: 5,
+          bonus: 5,
+          overall: 5,
+        },
+      });
+
+      setPreviewImages(bench.images || []);
+
+      const newRatingTypes: Record<string, "number" | "text"> = {};
+      if (bench.ratings) {
+        Object.entries(bench.ratings).forEach(([key, value]) => {
+          newRatingTypes[key] = typeof value === "string" ? "text" : "number";
+        });
+        setRatingTypes(newRatingTypes);
+      }
+    }
+  }, [bench, isOpen]);
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -235,7 +291,7 @@ const BenchForm: React.FC<BenchFormProps> = ({
               &larr;
             </button>
             <h2 className="font-serif text-xl text-old-ink text-center flex-grow">
-              {bench?.id ? "Edit" : "New"} Bench Entry
+              {formData.id ? "Edit" : "New"} Bench Entry
             </h2>
             <div className="w-4"></div>
           </div>
@@ -434,7 +490,7 @@ const BenchForm: React.FC<BenchFormProps> = ({
             disabled={loading}
             className="w-full py-3 bg-old-ink text-cream font-serif uppercase tracking-widest text-sm shadow-newspaper transform transition hover:translate-x-px hover:translate-y-px"
           >
-            {loading ? "Developing..." : bench?.id ? "Update" : "Publish"}
+            {loading ? "Developing..." : formData.id ? "Update" : "Publish"}
           </button>
         </form>
       </div>
