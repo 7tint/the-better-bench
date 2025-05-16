@@ -7,7 +7,6 @@ interface BenchCardProps {
 }
 
 const BenchCard: React.FC<BenchCardProps> = ({ bench }) => {
-  // Format date to look like a film camera date stamp
   const formatDateStamp = (date: Date) => {
     return date
       .toLocaleDateString("en-US", {
@@ -29,7 +28,7 @@ const BenchCard: React.FC<BenchCardProps> = ({ bench }) => {
                 alt={bench.name}
                 className="w-full h-full object-cover"
                 style={{
-                  filter: "saturate(1.1) contrast(1.05)", // Slightly adjusted filter for disposable camera look
+                  filter: "saturate(1.1) contrast(1.05)",
                 }}
               />
             ) : (

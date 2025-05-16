@@ -59,14 +59,12 @@ const AdminDashboard: React.FC = () => {
       const now = new Date();
 
       if (benchData.id) {
-        // Update existing bench
         const benchRef = doc(db, "benches", benchData.id);
         await updateDoc(benchRef, {
           ...benchData,
           updatedAt: now,
         });
       } else {
-        // Add new bench
         await addDoc(collection(db, "benches"), {
           ...benchData,
           createdAt: now,

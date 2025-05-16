@@ -237,7 +237,7 @@ const BenchForm: React.FC<BenchFormProps> = ({
             <h2 className="font-serif text-xl text-old-ink text-center flex-grow">
               {bench?.id ? "Edit" : "New"} Bench Entry
             </h2>
-            <div className="w-4"></div> {/* Spacer for centering */}
+            <div className="w-4"></div>
           </div>
           <p className="font-mono text-xs text-center text-old-ink mt-1">
             {new Date().toLocaleDateString()}

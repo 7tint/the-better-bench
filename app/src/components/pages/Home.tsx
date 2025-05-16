@@ -5,13 +5,11 @@ import { db } from "../../services/firebase";
 import type { BenchEntry } from "../../types";
 import BenchCard from "../common/BenchCard";
 
-// Helper function to convert Firestore timestamps to JavaScript Dates
 const convertTimestampsToDates = (
   data: Record<string, unknown>
 ): Record<string, unknown> => {
   const newData = { ...data };
 
-  // Convert both dateVisited, createdAt, and updatedAt if they exist and are Firestore timestamps
   if (
     newData.dateVisited &&
     typeof (newData.dateVisited as { toDate?: () => Date }).toDate ===
@@ -45,32 +43,37 @@ const Home: React.FC = () => {
   useEffect(() => {
     const fetchBenches = async () => {
       try {
-        // Get featured benches (highest rated)
-        const featuredQuery = query(
-          collection(db, "benches"),
-          orderBy("ratings.overall", "desc"),
-          limit(1)
-        );
+        const allBenchesQuery = query(collection(db, "benches"));
 
-        // Get recent benches
         const recentQuery = query(
           collection(db, "benches"),
           orderBy("dateVisited", "desc"),
           limit(3)
         );
 
-        const [featuredSnapshot, recentSnapshot] = await Promise.all([
-          getDocs(featuredQuery),
+        const [allBenchesSnapshot, recentSnapshot] = await Promise.all([
+          getDocs(allBenchesQuery),
           getDocs(recentQuery),
         ]);
 
-        const featuredData = featuredSnapshot.docs.map((doc) => {
+        const allBenches = allBenchesSnapshot.docs.map((doc) => {
           const data = doc.data();
           return {
             id: doc.id,
             ...convertTimestampsToDates(data),
           };
         }) as BenchEntry[];
+
+        const today = new Date();
+        const dateSeed =
+          today.getFullYear() * 10000 +
+          (today.getMonth() + 1) * 100 +
+          today.getDate();
+
+        // Use the date as a seed for selecting the bench
+        const randomIndex = dateSeed % (allBenches.length || 1); // Avoid division by zero
+        const featuredData =
+          allBenches.length > 0 ? [allBenches[randomIndex]] : [];
 
         const recentData = recentSnapshot.docs.map((doc) => {
           const data = doc.data();
@@ -149,16 +152,16 @@ const Home: React.FC = () => {
 
             <div className="md:w-1/3 bg-cream p-6 border border-old-ink">
               <h3 className="font-serif font-bold text-xl text-old-ink mb-3">
-                Bench of the Day
+                Today's Random Feature
               </h3>
 
               <div className="magazine-column">
                 <p className="font-serif text-sm text-old-ink mb-3 italic">
-                  Our editors have selected this exceptional bench for today's
+                  Our editors have randomly selected this bench for today's
                   feature. Located at coordinates{" "}
                   {featuredBenches[0].location.latitude.toFixed(4)},{"\u00A0"}
                   {featuredBenches[0].location.longitude.toFixed(4)}, this bench
-                  offers an experience that stands out from the ordinary.
+                  offers a unique experience worth exploring.
                 </p>
 
                 <p className="font-serif text-sm text-old-ink font-bold">

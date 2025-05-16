@@ -115,7 +115,6 @@ const BenchDetails: React.FC = () => {
       </div>
 
       <div className="flex flex-col lg:flex-row gap-8 mb-12">
-        {/* Image Gallery */}
         <div className="lg:w-3/5">
           <div className="bg-cream p-4 border-2 border-old-ink shadow-polaroid mb-4">
             <div className="relative aspect-[4/3] bg-faded-black overflow-hidden">
