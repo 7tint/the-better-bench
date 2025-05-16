@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { ref, uploadString, getDownloadURL } from "firebase/storage";
 import { storage } from "../../services/firebase";
+import { isOnline, saveOfflineEntry } from "../../services/offlineStorage";
 import { v4 as uuidv4 } from "uuid";
 import type { BenchEntry } from "../../types";
 
@@ -232,6 +233,10 @@ const BenchForm: React.FC<BenchFormProps> = ({
     try {
       const imageUrls = await Promise.all(
         previewImages.map(async (imageData) => {
+          if (!isOnline() && imageData.startsWith("data:")) {
+            return imageData;
+          }
+
           if (!imageData.startsWith("data:")) {
             return imageData;
           }
@@ -261,7 +266,18 @@ const BenchForm: React.FC<BenchFormProps> = ({
         images: imageUrls,
       };
 
-      await onSubmit(updatedFormData);
+      if (isOnline()) {
+        await onSubmit(updatedFormData);
+      } else {
+        const tempId = await saveOfflineEntry(updatedFormData);
+        console.log(`Saved bench entry offline with temporary ID: ${tempId}`);
+
+        await onSubmit({
+          ...updatedFormData,
+          id: tempId,
+        });
+      }
+
       onClose();
     } catch (error) {
       console.error("Error saving bench:", error);

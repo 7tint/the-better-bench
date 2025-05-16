@@ -18,4 +18,7 @@ export interface BenchEntry {
   dateVisited: Date;
   createdAt: Date;
   updatedAt: Date;
+  tempId?: string;
+  _offline?: boolean;
+  _status?: "pending" | "synced";
 }

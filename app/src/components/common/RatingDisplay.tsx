@@ -6,13 +6,24 @@ interface RatingDisplayProps {
   maxValue?: number;
 }
 
+const ensureNumber = (value: unknown): number => {
+  if (typeof value === "number") {
+    return value;
+  } else if (typeof value === "string") {
+    const parsed = parseFloat(value);
+    return isNaN(parsed) ? 0 : parsed;
+  }
+  return 0;
+};
+
 const RatingDisplay: React.FC<RatingDisplayProps> = ({
   category,
   value,
   maxValue = 10,
 }) => {
-  const numericValue = typeof value === "number" ? value : null;
   const isTextRating = typeof value === "string" && isNaN(Number(value));
+
+  const numericValue = isTextRating ? null : ensureNumber(value);
 
   return (
     <div className="mb-4">

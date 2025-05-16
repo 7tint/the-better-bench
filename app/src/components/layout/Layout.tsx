@@ -1,11 +1,12 @@
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
+import NetworkStatus from "../common/NetworkStatus";
 
 interface LayoutProps {
   isAdmin?: boolean;
 }
 
-const Layout: React.FC<LayoutProps> = () => {
+const Layout: React.FC<LayoutProps> = ({ isAdmin = false }) => {
   return (
     <div className="min-h-screen bg-cream">
       <header className="px-4 pb-6 pt-8 bg-yellowed-paper border-b-3 border-old-ink">
@@ -50,6 +51,7 @@ const Layout: React.FC<LayoutProps> = () => {
       </header>
 
       <main className="container mx-auto px-4 py-6">
+        <NetworkStatus showSyncButton={isAdmin} />
         <Outlet />
       </main>
 

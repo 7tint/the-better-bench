@@ -1,8 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { db } from "../../services/firebase";
+import { isOnline, getOfflineEntries } from "../../services/offlineStorage";
 import BenchCard from "../common/BenchCard";
 import type { BenchEntry } from "../../types";
+
+const ensureDate = (date: Date | string | number | null | undefined): Date => {
+  if (date instanceof Date) {
+    return date;
+  } else if (typeof date === "string") {
+    return new Date(date);
+  } else if (typeof date === "number") {
+    return new Date(date);
+  }
+  return new Date();
+};
+
+const ensureNumber = (value: unknown): number => {
+  if (typeof value === "number") {
+    return value;
+  } else if (typeof value === "string") {
+    return parseFloat(value) || 0;
+  }
+  return 0;
+};
 
 const Gallery: React.FC = () => {
   const [benches, setBenches] = useState<BenchEntry[]>([]);
@@ -22,7 +43,10 @@ const Gallery: React.FC = () => {
       newData.dateVisited = (
         newData.dateVisited as { toDate: () => Date }
       ).toDate();
+    } else if (newData.dateVisited) {
+      newData.dateVisited = ensureDate(newData.dateVisited as Date | string);
     }
+
     if (
       newData.createdAt &&
       typeof (newData.createdAt as { toDate?: () => Date }).toDate ===
@@ -31,7 +55,10 @@ const Gallery: React.FC = () => {
       newData.createdAt = (
         newData.createdAt as { toDate: () => Date }
       ).toDate();
+    } else if (newData.createdAt) {
+      newData.createdAt = ensureDate(newData.createdAt as Date | string);
     }
+
     if (
       newData.updatedAt &&
       typeof (newData.updatedAt as { toDate?: () => Date }).toDate ===
@@ -40,6 +67,18 @@ const Gallery: React.FC = () => {
       newData.updatedAt = (
         newData.updatedAt as { toDate: () => Date }
       ).toDate();
+    } else if (newData.updatedAt) {
+      newData.updatedAt = ensureDate(newData.updatedAt as Date | string);
+    }
+
+    if (newData.location && typeof newData.location === "object") {
+      const location = newData.location as Record<string, unknown>;
+      if ("latitude" in location) {
+        location.latitude = ensureNumber(location.latitude);
+      }
+      if ("longitude" in location) {
+        location.longitude = ensureNumber(location.longitude);
+      }
     }
 
     return newData;
@@ -49,20 +88,68 @@ const Gallery: React.FC = () => {
     const fetchBenches = async () => {
       setLoading(true);
       try {
-        const benchesQuery = query(
-          collection(db, "benches"),
-          orderBy(sortBy === "date" ? "dateVisited" : "ratings.overall", "desc")
-        );
+        let benchesData: BenchEntry[] = [];
 
-        const snapshot = await getDocs(benchesQuery);
+        if (isOnline()) {
+          const benchesQuery = query(
+            collection(db, "benches"),
+            orderBy(
+              sortBy === "date" ? "dateVisited" : "ratings.overall",
+              "desc"
+            )
+          );
 
-        const benchesData = snapshot.docs.map((doc) => {
-          const data = doc.data();
-          return {
-            id: doc.id,
-            ...convertTimestampsToDates(data),
-          };
-        }) as BenchEntry[];
+          const snapshot = await getDocs(benchesQuery);
+
+          benchesData = snapshot.docs.map((doc) => {
+            const data = doc.data();
+            return {
+              id: doc.id,
+              ...convertTimestampsToDates(data),
+            };
+          }) as BenchEntry[];
+        } else {
+          const offlineEntries = getOfflineEntries();
+
+          benchesData = offlineEntries.map((entry) => {
+            const processedEntry = {
+              ...entry,
+              id: entry.id || entry.tempId || "",
+              dateVisited: ensureDate(entry.dateVisited),
+              createdAt: ensureDate(entry.createdAt),
+              updatedAt: ensureDate(entry.updatedAt),
+            };
+
+            // Ensure location coordinates are numbers
+            if (processedEntry.location) {
+              processedEntry.location = {
+                ...processedEntry.location,
+                latitude: ensureNumber(processedEntry.location.latitude),
+                longitude: ensureNumber(processedEntry.location.longitude),
+              };
+            }
+
+            return processedEntry;
+          }) as BenchEntry[];
+
+          if (sortBy === "date") {
+            benchesData.sort(
+              (a, b) => b.dateVisited.getTime() - a.dateVisited.getTime()
+            );
+          } else {
+            benchesData.sort((a, b) => {
+              const ratingA =
+                typeof a.ratings.overall === "number"
+                  ? a.ratings.overall
+                  : parseFloat(a.ratings.overall || "0");
+              const ratingB =
+                typeof b.ratings.overall === "number"
+                  ? b.ratings.overall
+                  : parseFloat(b.ratings.overall || "0");
+              return ratingB - ratingA;
+            });
+          }
+        }
 
         setBenches(benchesData);
       } catch (error) {

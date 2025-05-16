@@ -2,8 +2,29 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../services/firebase";
+import { isOnline, getOfflineEntries } from "../../services/offlineStorage";
 import RatingDisplay from "../common/RatingDisplay";
 import type { BenchEntry } from "../../types";
+
+const ensureNumber = (value: unknown): number => {
+  if (typeof value === "number") {
+    return value;
+  } else if (typeof value === "string") {
+    return parseFloat(value) || 0;
+  }
+  return 0;
+};
+
+const ensureDate = (date: Date | string | number | null | undefined): Date => {
+  if (date instanceof Date) {
+    return date;
+  } else if (typeof date === "string") {
+    return new Date(date);
+  } else if (typeof date === "number") {
+    return new Date(date);
+  }
+  return new Date();
+};
 
 const BenchDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -17,16 +38,57 @@ const BenchDetails: React.FC = () => {
 
       try {
         setLoading(true);
+
+        if (!isOnline()) {
+          const offlineEntries = getOfflineEntries();
+          const offlineBench = offlineEntries.find(
+            (entry) => entry.id === id || entry.tempId === id
+          );
+
+          if (offlineBench) {
+            const benchData = {
+              ...offlineBench,
+              id: offlineBench.id || offlineBench.tempId || id,
+              dateVisited: ensureDate(offlineBench.dateVisited),
+              createdAt: ensureDate(offlineBench.createdAt),
+              updatedAt: ensureDate(offlineBench.updatedAt),
+            } as BenchEntry;
+
+            if (benchData.location) {
+              benchData.location.latitude = ensureNumber(
+                benchData.location.latitude
+              );
+              benchData.location.longitude = ensureNumber(
+                benchData.location.longitude
+              );
+            }
+
+            setBench(benchData);
+            setLoading(false);
+            return;
+          }
+        }
+
         const benchDoc = await getDoc(doc(db, "benches", id));
 
         if (benchDoc.exists()) {
+          const data = benchDoc.data();
           const benchData = {
             id: benchDoc.id,
-            ...benchDoc.data(),
-            dateVisited: benchDoc.data().dateVisited?.toDate() || new Date(),
-            createdAt: benchDoc.data().createdAt?.toDate() || new Date(),
-            updatedAt: benchDoc.data().updatedAt?.toDate() || new Date(),
+            ...data,
+            dateVisited: data.dateVisited?.toDate() || new Date(),
+            createdAt: data.createdAt?.toDate() || new Date(),
+            updatedAt: data.updatedAt?.toDate() || new Date(),
           } as BenchEntry;
+
+          if (benchData.location) {
+            benchData.location.latitude = ensureNumber(
+              benchData.location.latitude
+            );
+            benchData.location.longitude = ensureNumber(
+              benchData.location.longitude
+            );
+          }
 
           setBench(benchData);
         } else {
@@ -93,6 +155,9 @@ const BenchDetails: React.FC = () => {
       day: "numeric",
     });
   };
+
+  const latitude = ensureNumber(bench.location?.latitude);
+  const longitude = ensureNumber(bench.location?.longitude);
 
   return (
     <div>
@@ -190,8 +255,8 @@ const BenchDetails: React.FC = () => {
               Location
             </h3>
             <div className="font-mono text-sm">
-              <p>Latitude: {bench.location.latitude.toFixed(6)}</p>
-              <p>Longitude: {bench.location.longitude.toFixed(6)}</p>
+              <p>Latitude: {latitude.toFixed(6)}</p>
+              <p>Longitude: {longitude.toFixed(6)}</p>
               {bench.location.displayName && (
                 <p className="mt-2">{bench.location.displayName}</p>
               )}

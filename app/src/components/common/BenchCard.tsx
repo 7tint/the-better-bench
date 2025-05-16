@@ -6,9 +6,21 @@ interface BenchCardProps {
   bench: BenchEntry;
 }
 
+const ensureDate = (date: Date | string | number | null | undefined): Date => {
+  if (date instanceof Date) {
+    return date;
+  } else if (typeof date === "string") {
+    return new Date(date);
+  } else if (typeof date === "number") {
+    return new Date(date);
+  }
+  return new Date();
+};
+
 const BenchCard: React.FC<BenchCardProps> = ({ bench }) => {
-  const formatDateStamp = (date: Date) => {
-    return date
+  const formatDateStamp = (date: Date | string | number | undefined) => {
+    const safeDate = ensureDate(date);
+    return safeDate
       .toLocaleDateString("en-US", {
         year: "2-digit",
         month: "2-digit",
